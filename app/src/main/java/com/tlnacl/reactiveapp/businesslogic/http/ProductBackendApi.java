@@ -27,12 +27,12 @@ import retrofit2.http.Path;
 
 /**
  * The Retrofit interface to retrieve data from the backend over http
- *
+ *https://raw.githubusercontent.com/tlnacl/reactiveApp/shop/app/server/api/products3.json
  * @author Hannes Dorfmann
  */
 public interface ProductBackendApi {
 
-  @GET("/sockeqwe/mosby/master"
-      + "/sample-mvi/server/api/products{pagination}.json")
+  @GET("/tlnacl/reactiveApp/shop"
+      + "/app/server/api/products{pagination}.json")
   Observable<List<Product>> getProducts(@Path("pagination") int pagination);
 }

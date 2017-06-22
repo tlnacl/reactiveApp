@@ -54,7 +54,7 @@ public class ProductBackendApiDecorator {
   public Observable<List<Product>> getAllProducts() {
     return Observable.zip(getProducts(0), getProducts(1), getProducts(2), getProducts(3),
         (products0, products1, products2, products3) -> {
-          List<Product> productList = new ArrayList<Product>();
+          List<Product> productList = new ArrayList<>();
           productList.addAll(products0);
           productList.addAll(products1);
           productList.addAll(products2);

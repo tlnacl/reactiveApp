@@ -42,6 +42,7 @@
         <fragment
             android:id="@+id/shoppingCartFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:name="com.tlnacl.reactiveapp.ui.shop.ShoppingCartOverviewFragment"/>
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 </FrameLayout>
