@@ -28,15 +28,16 @@ class SearchPrensenter
     //query can be wrap by SearchEvent if it gets complecated
     //TODO handle ui event is in all presenter move to BasePresenter
     fun handleUiEvent(query: Observable<String>) {
-        query.flatMap { searchEngine.searchFor(it) }
-                .doOnNext { Timber.d("2:" + Thread.currentThread().toString()) }
-                .map<SearchViewState> { products -> SearchViewState.SearchResult(products) }
-                .doOnNext { Timber.d(it.toString()) }
-                .onErrorReturn { error -> SearchViewState.Error(error) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .startWith(SearchViewState.Loading)
-                .doOnNext { Timber.d("3:" + Thread.currentThread().toString()) }
+        query.flatMap {
+            searchEngine.searchFor(it)
+                    .doOnNext { Timber.d("2:" + Thread.currentThread().toString()) }
+                    .map<SearchViewState> { products -> SearchViewState.SearchResult(products) }
+                    .doOnNext { Timber.d(it.toString()) }
+                    .onErrorReturn { error -> SearchViewState.Error(error) }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .startWith(SearchViewState.Loading)
+        }
                 .subscribe { mvpView?.render(it) }
     }
 
