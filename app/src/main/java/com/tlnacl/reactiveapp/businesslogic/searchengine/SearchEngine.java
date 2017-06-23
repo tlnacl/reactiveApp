@@ -25,6 +25,8 @@ import com.tlnacl.reactiveapp.businesslogic.model.Product;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 
 /**
@@ -35,6 +37,7 @@ import io.reactivex.Observable;
 public class SearchEngine {
   private final ProductBackendApiDecorator backend;
 
+  @Inject
   public SearchEngine(ProductBackendApiDecorator productApi) {
     this.backend = productApi;
   }

@@ -24,6 +24,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 
 /**
@@ -40,6 +42,7 @@ import io.reactivex.Observable;
 public class ProductBackendApiDecorator {
   private final ProductBackendApi api;
 
+  @Inject
   public ProductBackendApiDecorator(ProductBackendApi api) {
     this.api = api;
   }
