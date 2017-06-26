@@ -16,24 +16,6 @@ import javax.inject.Singleton
 class AndroidModule(private val context: Context) {
 
   @Singleton @Provides fun provideContext(): Context = context
-  @Singleton @Provides fun provideGithubService():GithubApiService{
-    val httpClientBuilder = OkHttpClient.Builder()
-
-    if (BuildConfig.DEBUG) {
-      val loggingInterceptor = HttpLoggingInterceptor { message -> Timber.d(message) }
-      loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-      httpClientBuilder.addInterceptor(loggingInterceptor)
-      httpClientBuilder.addNetworkInterceptor(StethoInterceptor())
-    }
-
-    val restAdapter = Retrofit.Builder()
-            .baseUrl(BuildConfig.API_ENDPOINT)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(httpClientBuilder.build())
-            .build()
-    return restAdapter.create(GithubApiService::class.java)
-  }
 
   @Singleton @Provides fun provideProductBackendService():ProductBackendApi{
     val httpClientBuilder = OkHttpClient.Builder()

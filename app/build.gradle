@@ -22,7 +22,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField 'String', 'API_ENDPOINT', '"https://api.github.com"'
+        buildConfigField 'String', 'API_ENDPOINT', '"https://raw.githubusercontent.com"'
     }
     buildTypes {
         release {

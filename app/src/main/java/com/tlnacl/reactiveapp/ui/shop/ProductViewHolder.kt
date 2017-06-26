@@ -17,7 +17,7 @@ import com.tlnacl.reactiveapp.businesslogic.model.Product
  * Created by tomt on 23/06/17.
  */
 class ProductViewHolder(context: Context, parent: ViewGroup, val callback: ProductClickedListener)
-    : RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item_normal, parent, false)) {
+    : RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_product, parent, false)) {
 
     @BindView(R.id.productImage) lateinit var image: ImageView
     @BindView(R.id.productName) lateinit var name: TextView

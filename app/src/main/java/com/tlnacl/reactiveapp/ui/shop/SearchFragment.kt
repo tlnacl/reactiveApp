@@ -73,6 +73,7 @@ class SearchFragment : Fragment(), SearchView, ProductViewHolder.ProductClickedL
     }
 
     override fun render(searchViewState: SearchViewState) {
+        Timber.d("render:" + searchViewState)
         when (searchViewState) {
             is SearchViewState.SearchNotStartedYet -> renderSearchNotStarted()
             is SearchViewState.EmptyResult -> renderEmptyResult()

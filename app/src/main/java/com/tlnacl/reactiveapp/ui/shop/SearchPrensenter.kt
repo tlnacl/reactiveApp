@@ -35,9 +35,9 @@ class SearchPrensenter
                     .doOnNext { Timber.d(it.toString()) }
                     .onErrorReturn { error -> SearchViewState.Error(error) }
                     .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .startWith(SearchViewState.Loading)
         }
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { mvpView?.render(it) }
     }
 
