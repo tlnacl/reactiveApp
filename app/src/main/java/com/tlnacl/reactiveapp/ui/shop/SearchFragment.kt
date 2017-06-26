@@ -67,7 +67,6 @@ class SearchFragment : Fragment(), SearchView, ProductViewHolder.ProductClickedL
                 .filter { queryString -> queryString.length > 3 || queryString.isEmpty() }
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
-                .doOnNext { Timber.d("Fragment:" + Thread.currentThread().toString()) }
                 .map { it.toString() })
 
     }

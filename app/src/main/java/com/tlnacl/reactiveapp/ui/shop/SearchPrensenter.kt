@@ -14,11 +14,11 @@ import javax.inject.Inject
  * Created by tomt on 23/06/17.
  */
 class SearchPrensenter
-    @Inject constructor(val searchEngine: SearchEngine): BasePresenter<SearchView>(){
+@Inject constructor(val searchEngine: SearchEngine) : BasePresenter<SearchView>() {
     private var startDisposables = CompositeDisposable()
     private val changeRequestRelay = PublishRelay.create<String>()
     //TODO init state is in all presenter due to presenter is for ui move to BasePresenter
-    fun initState(){
+    fun initState() {
         mvpView?.render(SearchViewState.SearchNotStartedYet)
 //        startDisposables.add(changeRequestRelay
 ////                .observeOn(Schedulers.io())
@@ -28,32 +28,21 @@ class SearchPrensenter
     //query can be wrap by SearchEvent if it gets complecated
     //TODO handle ui event is in all presenter move to BasePresenter
     fun handleUiEvent(query: Observable<String>) {
-        query.flatMap {
-            searchEngine.searchFor(it)
-                    .doOnNext { Timber.d("2:" + Thread.currentThread().toString()) }
-                    .map<SearchViewState> { products -> SearchViewState.SearchResult(products) }
+        //interesting result of SearchNotStartedYet if using flatMap instead of switchMap
+        query.switchMap { searchString ->
+            if (searchString.isEmpty()) Observable.just(SearchViewState.SearchNotStartedYet)
+            else searchEngine.searchFor(searchString)
+                    .map<SearchViewState> { products ->
+                        if (products.isEmpty()) SearchViewState.EmptyResult
+                        else SearchViewState.SearchResult(products)
+                    }
                     .doOnNext { Timber.d(it.toString()) }
                     .onErrorReturn { error -> SearchViewState.Error(error) }
                     .subscribeOn(Schedulers.io())
                     .startWith(SearchViewState.Loading)
+
         }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { mvpView?.render(it) }
     }
-
-//    fun search (query:String){
-//
-//        Timber.d("1:" + Thread.currentThread().toString())
-//        //Add <SearchViewState> on map for generic issue
-//        searchEngine.searchFor(query)
-//                .doOnNext {  Timber.d("2:" + Thread.currentThread().toString()) }
-//                .map<SearchViewState> { products -> SearchViewState.SearchResult( products) }
-//                .doOnNext { Timber.d(it.toString()) }
-//                .onErrorReturn { error -> SearchViewState.Error(error) }
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .startWith(SearchViewState.Loading)
-//                .doOnNext {  Timber.d("3:" + Thread.currentThread().toString()) }
-//                .subscribe { mvpView?.render(it) }
-//    }
 }
